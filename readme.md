@@ -68,6 +68,6 @@ We use the **[RAVDESS Dataset](https://www.kaggle.com/datasets/uwrfkaggler/ravde
 
 ## Contributors
 
-- 23AIML056 - Kavya Prajapati - [Email me](23aiml056@charusat.edu.in)
-- 23AIML064 - Aarya Shah - [Email me](23aiml064@charusat.edu.in)
-- 23AIML074 - Vansh Mehta - [Email me](23aiml074@charusat.edu.in)
+- 23AIML056 - Kavya Prajapati - kavya31052005@gmail.com
+- 23AIML064 - Aarya Shah - shahaarya465@gmail.com
+- 23AIML074 - Vansh Mehta - vansh161976@gmail.com
