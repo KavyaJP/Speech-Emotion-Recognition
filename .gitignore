@@ -1,0 +1,4 @@
+AudioData/
+*.wav
+.vscode/
+node_modules/
