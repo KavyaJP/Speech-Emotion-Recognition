@@ -9,8 +9,7 @@ This project aims to recognize human emotions from speech using a Long Short-Ter
 - 🎙️ Real-time voice recording via GUI
 - 🤖 Emotion prediction using LSTM neural networks
 - 📊 Trained on RAVDESS dataset with ~82% accuracy
-- 🧠 Uses MFCC, Chroma, and Mel Spectrogram features
-- 🪟 Simple, desktop-based interface built with Tkinter
+- 🧠 Uses MFCC, Chroma features
 
 ---
 
@@ -21,16 +20,19 @@ This project aims to recognize human emotions from speech using a Long Short-Ter
 - Librosa
 - Pandas, NumPy
 - Scikit-learn
-- Tkinter
 - Joblib
 - Matplotlib
 - Jupyter Notebook (for development)
+- FlaskAPI
+- ReactJS
 
 ---
 
 ## 🗃️ Dataset
 
 We use the **[RAVDESS Dataset](https://www.kaggle.com/datasets/uwrfkaggler/ravdess-emotional-speech-audio)** (Ryerson Audio-Visual Database of Emotional Speech and Song), which contains audio recordings of actors expressing various emotions.
+
+---
 
 ---
 
@@ -41,28 +43,31 @@ We use the **[RAVDESS Dataset](https://www.kaggle.com/datasets/uwrfkaggler/ravde
    git clone https://github.com/KavyaJP/SGP-I.git
    cd SGP-I
    ```
+
+### 1. Train the Model yourself (optional, trained model and encodings are already saved in backend)
+
+Note: Do this only if you want to train the model on custom data
+
+1. Change Directory
+
+   ```bash
+   cd Training
+   ```
+
 2. **Install Dependancies:**
+
    ```bash
    pip install -r requirements.txt
    ```
-3. **Record the Audio:**
-   ```bash
-   python record.py
-   ```
-4. **Run each cells Jupyter Notebook:**
+
+3. **Run each cells Jupyter Notebook:**
    Ensure that you update the audio input path when loading the data, and specify the path to your recorded audio file when predicting the emotion in your audio.
 
----
+### 2. Backend
 
-## GUI Demo
+Note: if you trained the model on custom data then save the model and move the saved .keras and .pkl file and replace the already existing .keras and .pkl file
 
-![GUI](GUI_Demo.png)
-
----
-
-## Project Report
-
-![Project Report](ProjectReport.pdf)
+### 3. Frontend
 
 ---
 
