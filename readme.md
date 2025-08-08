@@ -73,6 +73,6 @@ Note: if you trained the model on custom data then save the model and move the s
 
 ## Contributors
 
-- 23AIML056 - Kavya Prajapati - kavya31052005@gmail.com
-- 23AIML064 - Aarya Shah - shahaarya465@gmail.com
-- 23AIML074 - Vansh Mehta - vansh161976@gmail.com
+- Kavya Prajapati - [E-Mail](mailto:kavya31052005@gmail.com)
+- Aarya Shah - [E-Mail](mailto:shahaarya465@gmail.com)
+- Vansh Mehta - [E-Mail](mailto:vansh161976@gmail.com)
