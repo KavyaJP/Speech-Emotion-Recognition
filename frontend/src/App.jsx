@@ -3,7 +3,7 @@ import axios from 'axios';
 import './App.css';
 
 // Constants
-const API_URL = 'https://speechemotionrecognition-01x9.onrender.com';
+const API_URL = 'http://127.0.0.1:5000';
 
 //================================================
 // 1. Microphone Recorder Component
@@ -227,11 +227,22 @@ function App() {
         {error && <div className="error-message">{error}</div>}
 
         {prediction && (
-          <div className="results-card">
-            <h2>Prediction Results ✨</h2>
-            {/* Results items... */}
-          </div>
-        )}
+      <div className="results-card">
+        <h2>Prediction Results ✨</h2>
+        <div className="result-item">
+          <span className="result-label">Predicted Emotion:</span>
+          <span className="result-value emotion">{prediction.predicted_emotion}</span>
+        </div>
+        <div className="result-item">
+          <span className="result-label">Predicted Energy:</span>
+          <span className="result-value">{prediction.predicted_energy}</span>
+        </div>
+        <div className="result-item">
+          <span className="result-label">Confidence:</span>
+          <span className="result-value">{prediction.confidence}</span>
+        </div>
+      </div>
+    )}
       </main>
     </div>
   );
