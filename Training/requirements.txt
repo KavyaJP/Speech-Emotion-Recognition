@@ -10,3 +10,5 @@ ipython
 jupyter
 jupyterlab
 seaborn
+lightgbm
+tqdm
