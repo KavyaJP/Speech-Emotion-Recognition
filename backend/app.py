@@ -17,9 +17,14 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 # Initialize the Flask app
 app = Flask(__name__)
 
+origins = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+]
+
 # --- Enable CORS ---
 # This allows your frontend to make requests to this backend.
-CORS(app)
+CORS(app, origins=origins, supports_credentials=True)
 
 # --- Load All Models, Scalers, and Encoders ---
 
