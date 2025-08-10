@@ -1,5 +1,4 @@
 # Audio Files
-AudioData/
 *.wav
 
 # Logs
@@ -26,3 +25,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Python virtual environments
+*.env
+.venv/
+venv/
