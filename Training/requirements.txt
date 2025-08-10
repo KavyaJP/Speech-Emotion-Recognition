@@ -1,0 +1,12 @@
+numpy
+pandas
+matplotlib
+librosa
+scikit-learn
+tensorflow
+keras
+joblib
+ipython
+jupyter
+jupyterlab
+seaborn
