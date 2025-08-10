@@ -6,6 +6,7 @@ import joblib
 import tensorflow as tf
 import scipy.stats
 from flask import Flask, request, jsonify
+from flask_cors import CORS # Import CORS
 
 # --- Basic Setup ---
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
@@ -16,20 +17,22 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 # Initialize the Flask app
 app = Flask(__name__)
 
+# --- Enable CORS ---
+# This allows your frontend to make requests to this backend.
+CORS(app)
+
 # --- Load All Models, Scalers, and Encoders ---
 
 PIPELINE_OBJECTS = {}
 
-def load_pipeline_objects(base_path="export/"): # <-- This path is now correct for the new structure
+def load_pipeline_objects(base_path="export/"):
     """
     Loads all the necessary .joblib and .keras files for the pipeline.
     It looks for an 'export' folder inside the same directory as this script.
     """
     print("--- Loading all pipeline objects ---")
     
-    # Get the directory where this script is located
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Join the script's directory with the base_path to get the absolute path
     absolute_base_path = os.path.join(script_dir, base_path)
 
     print(f"Attempting to load from: {absolute_base_path}")
@@ -182,4 +185,5 @@ def health_check():
 
 # --- Run the App ---
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    # This is only for local testing. The production server (Gunicorn) is used for deployment.
+    app.run(port=5000)
