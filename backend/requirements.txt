@@ -3,3 +3,4 @@ tensorflow
 numpy
 joblib
 librosa
+scipy
