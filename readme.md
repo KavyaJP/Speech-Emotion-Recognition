@@ -30,9 +30,13 @@ This project aims to recognize human emotions from speech using a Long Short-Ter
 
 ## 🗃️ Dataset
 
-We use the **[RAVDESS Dataset](https://www.kaggle.com/datasets/uwrfkaggler/ravdess-emotional-speech-audio)** (Ryerson Audio-Visual Database of Emotional Speech and Song), which contains audio recordings of actors expressing various emotions.
+- We use the **[RAVDESS Dataset](https://www.kaggle.com/datasets/uwrfkaggler/ravdess-emotional-speech-audio)** (Ryerson Audio-Visual Database of Emotional Speech and Song), which contains audio recordings of actors expressing various emotions.
 
----
+- For Hindi SER we have used **[Dataset by Vishal Bhardwaj](https://www.kaggle.com/datasets/vishlb/speech-emotion-recognition-hindi?select=my+Dataset)**, which contains audio recorings in Hindi language and different Emotions
+
+- For Indian Accent English we have used **[Public TTS dataset](https://github.com/skit-ai/emotion-tts-dataset)**, which contains audio recordings for different emotions in Indian Accent english
+
+Note: The structure for all of these datasets was modified for easier importing in code.
 
 ---
 
@@ -49,13 +53,11 @@ We use the **[RAVDESS Dataset](https://www.kaggle.com/datasets/uwrfkaggler/ravde
 Note: Do this only if you want to train the model on custom data
 
 1. Change Directory
-
    ```bash
    cd Training
    ```
 
 2. **Install Dependancies:**
-
    ```bash
    pip install -r requirements.txt
    ```
@@ -66,6 +68,23 @@ Note: Do this only if you want to train the model on custom data
 ### 2. Backend
 
 Note: if you trained the model on custom data then save the model and move the saved .keras and .pkl file and replace the already existing .keras and .pkl file
+
+1. Change Directory
+   ```bash
+   cd backend
+   ```
+
+2. **Install Dependancies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Run the backend:**
+   ```bash
+   python app.py
+   ```
+
+Note: keep the backend running so that frontend can send data to the backend and backend can send a response to the frontend
 
 ### 3. Frontend
 
