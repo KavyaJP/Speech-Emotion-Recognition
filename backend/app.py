@@ -82,7 +82,6 @@ def load_pipeline_objects(base_path="export/"):
 # Load all objects on startup
 PIPELINE_OBJECTS = load_pipeline_objects()
 
-
 # --- Feature Extraction Function ---
 def extract_features_detailed(file_path):
     """
@@ -132,6 +131,29 @@ def extract_features_detailed(file_path):
     except Exception as e:
         print(f"Error during feature extraction: {e}")
         return None
+    
+# --- WARM-UP ---
+# This forces the JIT compilation of librosa to happen on startup,
+# not during the first request, which prevents timeouts and memory crashes.
+if PIPELINE_OBJECTS:
+    print("--- Running warm-up call to compile audio functions ---")
+    try:
+        # Create a dummy silent audio array (1 second of silence)
+        sr_warmup = 22050  # Sample rate
+        y_warmup = np.zeros(sr_warmup, dtype=np.float32)
+        warmup_file = "warmup_silent.wav"
+
+        # Use soundfile to save the dummy audio file
+        import soundfile as sf
+        sf.write(warmup_file, y_warmup, sr_warmup)
+
+        # Process it just like a real file
+        extract_features_detailed(warmup_file)
+        os.remove(warmup_file) # Clean up the dummy file
+        print("--- Warm-up complete, application is ready. ---")
+    except Exception as e:
+        print(f"An error occurred during warm-up: {e}")
+# --- END WARM-UP ---
 
 
 # --- WARM-UP ---
