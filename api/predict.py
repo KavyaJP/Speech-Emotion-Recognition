@@ -1,9 +1,10 @@
+# api/predict.py
+
 import os
 import warnings
 import json
 from http.server import BaseHTTPRequestHandler
 import cgi
-
 import numpy as np
 import librosa
 import joblib
@@ -11,19 +12,18 @@ import tensorflow as tf
 import scipy.stats
 import soundfile as sf
 
+# --- Basic Setup ---
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
 
-PIPELINE_OBJECTS = {}
+# --- Global variable to cache the pipeline. It starts empty. ---
+PIPELINE_OBJECTS = None
 
 
 def load_pipeline_objects(base_path="export/"):
-    """
-    Loads all the necessary .joblib and .keras files for the pipeline.
-    It looks for an 'export' folder inside the same directory as this script.
-    """
+    # (This function is unchanged)
     print("--- Loading all pipeline objects ---")
     script_dir = os.path.dirname(os.path.abspath(__file__))
     absolute_base_path = os.path.join(script_dir, base_path)
@@ -45,7 +45,6 @@ def load_pipeline_objects(base_path="export/"):
             full_path = os.path.join(absolute_base_path, filename)
             if not os.path.exists(full_path):
                 raise FileNotFoundError(f"Required file not found: {full_path}")
-            print(f"Loading: {full_path}")
             if filename.endswith(".keras"):
                 objects[name] = tf.keras.models.load_model(full_path)
             elif filename.endswith(".joblib"):
@@ -58,7 +57,7 @@ def load_pipeline_objects(base_path="export/"):
 
 
 def extract_features_detailed(file_path):
-    # This is your existing feature extraction function, no changes needed.
+    # (This function is unchanged)
     try:
         y, sr = librosa.load(file_path, sr=None)
         features = []
@@ -98,34 +97,32 @@ def extract_features_detailed(file_path):
         return None
 
 
-# --- Load models and run warm-up ONCE when the serverless function starts ---
-PIPELINE_OBJECTS = load_pipeline_objects()
-if PIPELINE_OBJECTS:
-    print("--- Running warm-up call to compile audio functions ---")
-    try:
-        sr_warmup = 22050
-        y_warmup = np.zeros(sr_warmup, dtype=np.float32)
-        # Use /tmp directory for writable space in serverless environments
-        warmup_file = "/tmp/warmup_silent.wav"
-        sf.write(warmup_file, y_warmup, sr_warmup)
-        extract_features_detailed(warmup_file)
-        os.remove(warmup_file)
-        print("--- Warm-up complete, application is ready. ---")
-    except Exception as e:
-        print(f"An error occurred during warm-up: {e}")
-
-
 # --- Vercel Serverless Handler ---
 class handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
-        # This is where your Flask route logic now lives.
-        try:
-            # Check if models were loaded correctly
-            if not PIPELINE_OBJECTS:
-                raise RuntimeError("Pipeline models not loaded. Check server logs.")
+        global PIPELINE_OBJECTS
 
-            # Parse the multipart form data to get the file
+        try:
+            # --- LAZY LOADING BLOCK ---
+            # This code now runs only on the first API request
+            if PIPELINE_OBJECTS is None:
+                print("--- First request: Loading models and warming up... ---")
+                PIPELINE_OBJECTS = load_pipeline_objects()
+                if PIPELINE_OBJECTS is None:
+                    raise RuntimeError(
+                        "Failed to load pipeline objects on first request."
+                    )
+
+                sr_warmup = 22050
+                y_warmup = np.zeros(sr_warmup, dtype=np.float32)
+                warmup_file = "/tmp/warmup_silent.wav"
+                sf.write(warmup_file, y_warmup, sr_warmup)
+                extract_features_detailed(warmup_file)
+                os.remove(warmup_file)
+                print("--- Models loaded and ready. ---")
+
+            # --- Prediction Logic ---
             form = cgi.FieldStorage(
                 fp=self.rfile,
                 headers=self.headers,
@@ -138,13 +135,10 @@ class handler(BaseHTTPRequestHandler):
                 raise ValueError("No audio file provided in the 'file' field.")
 
             audio_file = form["file"]
-
-            # Save the file temporarily
             temp_file_path = "/tmp/temp_audio.wav"
             with open(temp_file_path, "wb") as f:
                 f.write(audio_file.file.read())
 
-            # --- Your existing prediction logic ---
             features = extract_features_detailed(temp_file_path)
             os.remove(temp_file_path)
             if features is None:
@@ -183,14 +177,12 @@ class handler(BaseHTTPRequestHandler):
                 "confidence": f"{confidence * 100:.2f}%",
             }
 
-            # Send successful HTTP response
             self.send_response(200)
             self.send_header("Content-type", "application/json")
             self.end_headers()
             self.wfile.write(json.dumps(response_data).encode("utf-8"))
 
         except Exception as e:
-            # Handle any errors and send an error response
             error_data = {"error": str(e)}
             self.send_response(500)
             self.send_header("Content-type", "application/json")

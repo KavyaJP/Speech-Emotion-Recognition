@@ -6,10 +6,10 @@ This project aims to recognize human emotions from speech using a Long Short-Ter
 
 ## 📌 Features
 
-- 🎙️ Real-time voice recording via GUI
-- 🤖 Emotion prediction using LSTM neural networks
-- 📊 Trained on RAVDESS dataset with ~82% accuracy
-- 🧠 Uses MFCC, Chroma features
+- 🎙️ Real-time voice recording via React Frontend
+- 📃 Signle page Frontend
+- 🤖 Emotion prediction using LightBGM classifier and LSTM neural networks
+- 📊 Trained on Multiple dataset with ~70% accuracy
 
 ---
 
@@ -23,7 +23,6 @@ This project aims to recognize human emotions from speech using a Long Short-Ter
 - Joblib
 - Matplotlib
 - Jupyter Notebook (for development)
-- FlaskAPI
 - ReactJS
 
 ---
