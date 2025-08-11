@@ -21,7 +21,6 @@ app = Flask(__name__)
 origins = [
     "http://localhost:5173",
     "http://localhost:3000",
-    "https://speech-emotion-recognition-self.vercel.app/",
 ]
 
 # --- Enable CORS ---

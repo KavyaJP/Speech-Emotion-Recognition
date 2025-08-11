@@ -6,10 +6,10 @@ This project aims to recognize human emotions from speech using a Long Short-Ter
 
 ## 📌 Features
 
-- 🎙️ Real-time voice recording via GUI
-- 🤖 Emotion prediction using LSTM neural networks
-- 📊 Trained on RAVDESS dataset with ~82% accuracy
-- 🧠 Uses MFCC, Chroma features
+- 🎙️ Real-time voice recording via React frontend
+- 📃 Single Page Application for all three different input methods
+- 🤖 Emotion prediction using LSTM neural networks, lightbgm classifiers
+- 📊 Trained on Three different dataset with ~70% accuracy
 
 ---
 
@@ -87,6 +87,23 @@ Note: if you trained the model on custom data then save the model and move the s
 Note: keep the backend running so that frontend can send data to the backend and backend can send a response to the frontend
 
 ### 3. Frontend
+
+1. Now open up another terminal while keeping the backend terminal running and then
+
+2. Change Directory
+   ```bash
+   cd frontend
+   ```
+
+3. **Install Dependancies:**
+   ```bash
+   npm install
+   ```
+
+4. **Run the backend:**
+   ```bash
+   npm run dev
+   ```
 
 ---
 
