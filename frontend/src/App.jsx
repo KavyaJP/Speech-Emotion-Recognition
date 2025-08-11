@@ -2,9 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './App.css';
 
-// Constants
-const API_URL = '/api/app';
-
 //================================================
 // 1. Microphone Recorder Component
 //================================================
@@ -126,7 +123,7 @@ function App() {
   const [prediction, setPrediction] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  
+
   // --- THEME STATE ---
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -143,7 +140,7 @@ function App() {
   const toggleTheme = () => {
     setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
   };
-  
+
   const handleFileSelect = (selectedFile) => {
     setFile(selectedFile);
     setInputMode(null);
@@ -152,10 +149,10 @@ function App() {
   };
 
   const resetSelection = () => {
-      setFile(null);
-      setPrediction(null);
-      setError('');
-      setInputMode(null);
+    setFile(null);
+    setPrediction(null);
+    setError('');
+    setInputMode(null);
   }
 
   const handleSubmit = async () => {
@@ -168,7 +165,8 @@ function App() {
     formData.append('file', file);
 
     try {
-      const response = await axios.post(`${API_URL}/predict`, formData, {
+      // Change this line inside your handleSubmit function
+      const response = await axios.post('/api/predict', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setPrediction(response.data);
@@ -183,9 +181,9 @@ function App() {
     <div className="input-selection">
       <h2>How would you like to provide audio?</h2>
       <div className="button-group">
-        <button onClick={() => setInputMode('picker')} className="choice-button">📂<br/>Upload File</button>
-        <button onClick={() => setInputMode('mic')} className="choice-button">🎤<br/>Use Microphone</button>
-        <button onClick={() => setInputMode('drop')} className="choice-button">💧<br/>Drag & Drop</button>
+        <button onClick={() => setInputMode('picker')} className="choice-button">📂<br />Upload File</button>
+        <button onClick={() => setInputMode('mic')} className="choice-button">🎤<br />Use Microphone</button>
+        <button onClick={() => setInputMode('drop')} className="choice-button">💧<br />Drag & Drop</button>
       </div>
     </div>
   );
@@ -208,15 +206,15 @@ function App() {
           {theme === 'light' ? '🌙' : '☀️'}
         </button>
       </header>
-      
+
       <main>
         {!file ? (
-            renderInputMethod()
+          renderInputMethod()
         ) : (
           <div className="prediction-workflow">
             <div className="file-display">
-                Selected File: <strong>{file.name}</strong>
-                <button onClick={resetSelection} className="change-file-button">Change</button>
+              Selected File: <strong>{file.name}</strong>
+              <button onClick={resetSelection} className="change-file-button">Change</button>
             </div>
             <button onClick={handleSubmit} className="predict-button" disabled={isLoading}>
               {isLoading ? 'Analyzing...' : 'Predict Emotion'}
@@ -227,22 +225,22 @@ function App() {
         {error && <div className="error-message">{error}</div>}
 
         {prediction && (
-      <div className="results-card">
-        <h2>Prediction Results ✨</h2>
-        <div className="result-item">
-          <span className="result-label">Predicted Emotion:</span>
-          <span className="result-value emotion">{prediction.predicted_emotion}</span>
-        </div>
-        <div className="result-item">
-          <span className="result-label">Predicted Energy:</span>
-          <span className="result-value">{prediction.predicted_energy}</span>
-        </div>
-        <div className="result-item">
-          <span className="result-label">Confidence:</span>
-          <span className="result-value">{prediction.confidence}</span>
-        </div>
-      </div>
-    )}
+          <div className="results-card">
+            <h2>Prediction Results ✨</h2>
+            <div className="result-item">
+              <span className="result-label">Predicted Emotion:</span>
+              <span className="result-value emotion">{prediction.predicted_emotion}</span>
+            </div>
+            <div className="result-item">
+              <span className="result-label">Predicted Energy:</span>
+              <span className="result-value">{prediction.predicted_energy}</span>
+            </div>
+            <div className="result-item">
+              <span className="result-label">Confidence:</span>
+              <span className="result-value">{prediction.confidence}</span>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
