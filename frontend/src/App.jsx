@@ -123,7 +123,7 @@ function App() {
   const [prediction, setPrediction] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
+  const [loadingMessage, setLoadingMessage] = useState('Analyzing...');
   // --- THEME STATE ---
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -155,24 +155,33 @@ function App() {
     setInputMode(null);
   }
 
+  // Replace your existing handleSubmit function with this one
   const handleSubmit = async () => {
     if (!file) { setError('No file selected.'); return; }
+
     setIsLoading(true);
     setPrediction(null);
     setError('');
+    setLoadingMessage('Analyzing audio...'); // Initial message
+
+    // Set a timer to show a more detailed message if it takes too long
+    const coldStartTimer = setTimeout(() => {
+      setLoadingMessage('Server is waking up... This can take up to 15 seconds.');
+    }, 4000); // 4 seconds
 
     const formData = new FormData();
     formData.append('file', file);
 
     try {
-      // Change this line inside your handleSubmit function
       const response = await axios.post('/api/predict', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setPrediction(response.data);
     } catch (err) {
-      setError(err.response?.data?.error || 'An error occurred.');
+      const errorMessage = err.response?.data?.error || 'An error occurred during prediction.';
+      setError(errorMessage);
     } finally {
+      clearTimeout(coldStartTimer); // IMPORTANT: Clear the timer once the request is done
       setIsLoading(false);
     }
   };
@@ -217,7 +226,7 @@ function App() {
               <button onClick={resetSelection} className="change-file-button">Change</button>
             </div>
             <button onClick={handleSubmit} className="predict-button" disabled={isLoading}>
-              {isLoading ? 'Analyzing...' : 'Predict Emotion'}
+              {isLoading ? loadingMessage : 'Predict Emotion'}
             </button>
           </div>
         )}
