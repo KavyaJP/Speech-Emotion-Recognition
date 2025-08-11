@@ -1,114 +1,67 @@
-# 🎤 Speech Emotion Recognition using LSTM
+# 🎤 Speech Emotion Recognition
 
-This project aims to recognize human emotions from speech using a Long Short-Term Memory (LSTM) based deep learning model. By analyzing audio signals, the system can classify emotions such as happiness, sadness, anger, fear, and more. It features a simple Tkinter-based GUI for easy voice input and live emotion prediction.
+A full-stack application that recognizes human emotions from speech using a deep learning model. The system analyzes audio signals in real-time to classify emotions such as happiness, sadness, and anger. It features a modern React frontend that allows users to provide audio via file upload, microphone recording, or drag-and-drop.
 
 ---
 
-## 📌 Features
+## ✨ Key Features
 
-- 🎙️ Real-time voice recording via React frontend
-- 📃 Single Page Application for all three different input methods
-- 🤖 Emotion prediction using LSTM neural networks, lightbgm classifiers
-- 📊 Trained on Three different dataset with ~70% accuracy
+-   **Modern React Frontend**: A responsive and intuitive user interface built with React.
+-   **Multiple Input Methods**: Supports file uploads, direct microphone recording, and drag-and-drop.
+-   **Advanced Emotion Model**: Utilizes an LSTM neural network and LightGBM classifiers for prediction.
+-   **Multi-Lingual & Multi-Accent Support**: Trained on English, Hindi, and Indian-accented English datasets for robust performance.
+-   **Automated Local Setup**: Includes simple startup scripts (`start.bat`/`start.sh`) for a one-click launch of the entire full-stack environment.
 
 ---
 
 ## 🛠️ Technologies Used
 
-- Python
-- TensorFlow + Keras
-- Librosa
-- Pandas, NumPy
-- Scikit-learn
-- Joblib
-- Matplotlib
-- Jupyter Notebook (for development)
-- FlaskAPI
-- ReactJS
+-   **Backend**: Python, Flask, TensorFlow, Keras, Librosa, Scikit-learn
+-   **Frontend**: ReactJS, Vite, CSS
+-   **Core Libraries**: Pandas, NumPy, Joblib, SoundFile
+-   **Development**: Jupyter Notebook, Git
 
 ---
 
-## 🗃️ Dataset
+## 🗃️ Datasets
 
-- We use the **[RAVDESS Dataset](https://www.kaggle.com/datasets/uwrfkaggler/ravdess-emotional-speech-audio)** (Ryerson Audio-Visual Database of Emotional Speech and Song), which contains audio recordings of actors expressing various emotions.
+This project was trained on a combination of three distinct datasets to ensure a comprehensive and diverse model:
 
-- For Hindi SER we have used **[Dataset by Vishal Bhardwaj](https://www.kaggle.com/datasets/vishlb/speech-emotion-recognition-hindi?select=my+Dataset)**, which contains audio recorings in Hindi language and different Emotions
+-   **RAVDESS Dataset**: The core English dataset featuring North American actors.
+-   **Hindi SER Dataset**: A collection of emotional speech recordings in the Hindi language.
+-   **Indian Accent English TTS Dataset**: A public dataset of emotional speech in an Indian English accent.
 
-- For Indian Accent English we have used **[Public TTS dataset](https://github.com/skit-ai/emotion-tts-dataset)**, which contains audio recordings for different emotions in Indian Accent english
-
-Note: The structure for all of these datasets was modified for easier importing in code.
-
----
-
-## 🚀 How to Run the Project
-
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/KavyaJP/SGP-I.git
-   cd SGP-I
-   ```
-
-### 1. Train the Model yourself (optional, trained model and encodings are already saved in backend)
-
-Note: Do this only if you want to train the model on custom data
-
-1. Change Directory
-   ```bash
-   cd Training
-   ```
-
-2. **Install Dependancies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Run each cells Jupyter Notebook:**
-   Ensure that you update the audio input path when loading the data, and specify the path to your recorded audio file when predicting the emotion in your audio.
-
-### 2. Backend
-
-Note: if you trained the model on custom data then save the model and move the saved .keras and .pkl file and replace the already existing .keras and .pkl file
-
-1. Change Directory
-   ```bash
-   cd backend
-   ```
-
-2. **Install Dependancies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Run the backend:**
-   ```bash
-   python app.py
-   ```
-
-Note: keep the backend running so that frontend can send data to the backend and backend can send a response to the frontend
-
-### 3. Frontend
-
-1. Now open up another terminal while keeping the backend terminal running and then
-
-2. Change Directory
-   ```bash
-   cd frontend
-   ```
-
-3. **Install Dependancies:**
-   ```bash
-   npm install
-   ```
-
-4. **Run the backend:**
-   ```bash
-   npm run dev
-   ```
+*Note: The original structure of these datasets was modified for streamlined data processing.*
 
 ---
 
-## Contributors
+## 🚀 How to Run Locally
 
-- Kavya Prajapati - [E-Mail](mailto:kavya31052005@gmail.com)
-- Aarya Shah - [E-Mail](mailto:shahaarya465@gmail.com)
-- Vansh Mehta - [E-Mail](mailto:vansh161976@gmail.com)
+This project includes automated startup scripts for a simple setup.
+
+### Prerequisites
+
+-   **Python 3.12.3** must be installed and available in your system's PATH.
+-   **Node.js** (LTS version is recommended) must be installed.
+
+### Quick Start
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/KavyaJP/SGP-I.git
+    cd SGP-I
+    ```
+
+2.  **Run the Startup Script:**
+    -   **On Windows:** Double-click the `start.bat` file.
+    -   **On macOS / Linux:** Make the script executable first (`chmod +x start.sh`), then run it (`./start.sh`).
+
+The script will automatically perform a one-time setup to create a virtual environment and install all Python and Node.js dependencies. It will then start both the backend and frontend servers and open the application in your browser.
+
+---
+
+## 🤝 Contributors
+
+-   Kavya Prajapati - [E-Mail](mailto:kavya31052005@gmail.com)
+-   Aarya Shah - [E-Mail](mailto:shahaarya465@gmail.com)
+-   Vansh Mehta - [E-Mail](mailto:vansh161976@gmail.com)
