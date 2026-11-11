@@ -27,9 +27,9 @@ A full-stack application that recognizes human emotions from speech using a deep
 
 This project was trained on a combination of three distinct datasets to ensure a comprehensive and diverse model:
 
--   **RAVDESS Dataset**: The core English dataset featuring North American actors.
--   **Hindi SER Dataset**: A collection of emotional speech recordings in the Hindi language.
--   **Indian Accent English TTS Dataset**: A public dataset of emotional speech in an Indian English accent.
+-   **RAVDESS Dataset**: The core English dataset featuring North American actors. [Download](https://www.kaggle.com/datasets/uwrfkaggler/ravdess-emotional-speech-audio)
+-   **Hindi SER Dataset**: A collection of emotional speech recordings in the Hindi language. [Download](https://www.kaggle.com/datasets/vishlb/speech-emotion-recognition-hindi)
+-   **Indian Accent English TTS Dataset**: A public dataset of emotional speech in an Indian English accent. [Download]()
 
 *Note: The original structure of these datasets was modified for streamlined data processing.*
 
@@ -48,8 +48,8 @@ This project includes automated startup scripts for a simple setup.
 
 1.  **Clone the Repository:**
     ```bash
-    git clone https://github.com/KavyaJP/SGP-I.git
-    cd SGP-I
+    git clone https://github.com/KavyaJP/Speech-Emotion-Recognition.git
+    cd Speech-Emotion-Recognition
     ```
 
 2.  **Run the Startup Script:**
